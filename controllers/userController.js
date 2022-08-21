@@ -1,4 +1,6 @@
 const User = require("../models/user");
+const Mentor = require("../models/mentor");
+
 const AllPromise = require("../middlewares/allPromise");
 const CustomError = require("../utils/customError");
 const cookieToken = require("../utils/cookieToken");
@@ -30,7 +32,7 @@ exports.signup = AllPromise(async (req, res, next) => {
         crop: "scale",
     });
 
-
+    
 
     const user = await User.create({
         name,
@@ -58,7 +60,7 @@ exports.login = AllPromise(async (req, res, next) => {
     }
 
     // get user from DB
-    const user = await User.findOne({ email }).select("+password");
+    const user = await User.findOne({ email }).select("+password") || await Mentor.findOne({ email }).select("+password");
 
     // if user not found in DB
     if (!user) {
