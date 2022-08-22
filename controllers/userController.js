@@ -32,7 +32,7 @@ exports.signup = AllPromise(async (req, res, next) => {
         crop: "scale",
     });
 
-    
+
 
     const user = await User.create({
         name,
@@ -82,3 +82,31 @@ exports.login = AllPromise(async (req, res, next) => {
     // if all goes good and we send the token
     cookieToken(user, res);
 });
+
+//use logout
+exports.logout = AllPromise(async (req, res, next) => {
+    //clear the cookie
+    res.cookie("token", null, {
+        expires: new Date(Date.now()),
+        httpOnly: true,
+    });
+    //send JSON response for success
+    res.status(200).json({
+        succes: true,
+        message: "Logout success",
+    });
+});
+//user details
+
+exports.getLoggedInUserDetails = AllPromise(async (req, res, next) => {
+    //req.user will be added by middleware
+    // find user by id
+    const user = await User.findById(req.user.id);
+
+    //send response and user data
+    res.status(200).json({
+        success: true,
+        user,
+    });
+});
+
