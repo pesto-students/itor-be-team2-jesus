@@ -49,7 +49,7 @@ const mentorSchema = new mongoose.Schema({
     about: {
         type: String
     }
-});
+}, { timestamps: true });
 
 //encrypt password before save - HOOKS
 mentorSchema.pre("save", async function (next) {
