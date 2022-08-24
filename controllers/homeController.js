@@ -1,3 +1,4 @@
+//this all is for testing purpose
 const AllPromise = require("../middlewares/allPromise");
 
 exports.home = AllPromise(async (req, res) => {
