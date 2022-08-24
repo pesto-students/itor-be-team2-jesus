@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     schoolName: {
         type: String,
     }
-});
+}, { timestamps: true });
 
 //encrypt password before save - HOOKS
 userSchema.pre("save", async function (next) {

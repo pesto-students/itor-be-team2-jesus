@@ -59,6 +59,19 @@ exports.getAllMentor = AllPromise(async (req, res, next) => {
     });
 });
 
+//get one mentor
+exports.getOneMentor = AllPromise(async (req, res, next) => {
+    const mentor = await Mentor.findById(req.params.id);
+
+    if (!mentor) {
+        return next(new CustomError("No mentor found with this id", 401));
+    }
+    res.status(200).json({
+        success: true,
+        mentor,
+    });
+});
+
 
 //dashboard for mentor
 exports.getLoggedMentorDetails = AllPromise(async (req, res, next) => {
