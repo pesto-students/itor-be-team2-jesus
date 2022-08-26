@@ -1,24 +1,27 @@
 const Mentor = require("../models/mentor");
-const bigPromise = require("./bigPromise");
 const jwt = require("jsonwebtoken");
-//custom class for error message
-const CustomError = require("../utils/customError");
 
+exports.isLoggedInMentor = async (req, res, next) => {
+    try {
+        const token =
+            req.cookies.token || req.header("Authorization").replace("Bearer ", "");
 
-exports.isLoggedInMentor = bigPromise(async (req, res, next) => {
-    const token =
-        req.cookies.token || req.header("Authorization").replace("Bearer ", "");
+        if (!token) {
+            return res.status(401).json({
+                success: false,
+                message: "You must be Logged In!",
+            });
+        }
 
-    if (!token) {
-        return next(new CustomError("Login first to access this page", 401));
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        req.mentor = await Mentor.findById(decoded.id);
+
+        next();
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: "Authentication failed!",
+        });
     }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = await Mentor.findById(decoded.id)
-
-    next();
-});
-
-
-
+};

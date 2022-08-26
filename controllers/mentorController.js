@@ -1,88 +1,121 @@
 const Mentor = require("../models/mentor");
-const bigPromise = require("../middlewares/bigPromise");
 const cookieToken = require("../utils/cookieToken");
 const cloudinary = require("cloudinary");
-//custom class for error message
-const CustomError = require("../utils/customError");
 
 // for mentor sign up
-exports.signup = bigPromise(async (req, res, next) => {
-    if (!req.files) {
-        return next(new CustomError("Photo is required for signup", 400));
+exports.signup = async (req, res) => {
+    try {
+        if (!req.files) {
+            return res.status(400).json({
+                success: false,
+                message: "Photo is required for signup!",
+            });
+        }
+
+        const { name, email, password, companyName, yearOfEx, expertise } =
+            req.body;
+
+        if (!email || !name || !password) {
+            res.status(400).json({
+                success: false,
+                message: "Please enter your Email, Name, and Password!",
+            });
+        }
+
+        const mentorExists = await Mentor.findOne({ email });
+        if (mentorExists) {
+            return res.status(200).json({
+                success: false,
+                message: "You are already registered!",
+            });
+        }
+
+        let file = req.files.photo;
+
+        const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+            folder: "mentors",
+            width: 150,
+            crop: "scale",
+        });
+
+        const mentor = await Mentor.create({
+            name,
+            email,
+            password,
+            companyName,
+            yearOfEx,
+            expertise,
+            photo: {
+                id: result.public_id,
+                secure_url: result.secure_url,
+            },
+        });
+
+        cookieToken(mentor, res);
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: error,
+        });
     }
-
-    const { name, email, password, companyName, yearOfEx, expertise } = req.body;
-
-    if (!email || !name || !password) {
-        return next(
-            new CustomError(
-                "Name, Email, Password, and Professional Details are required",
-                400
-            )
-        );
-    }
-
-    let file = req.files.photo;
-
-    const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-        folder: "mentors",
-        width: 150,
-        crop: "scale",
-    });
-
-    const mentor = await Mentor.create({
-        name,
-        email,
-        password,
-        companyName,
-        yearOfEx,
-        expertise,
-        photo: {
-            id: result.public_id,
-            secure_url: result.secure_url,
-        },
-    });
-
-    cookieToken(mentor, res);
-});
+};
 
 //find a mentor
 
-exports.getAllMentors = bigPromise(async (req, res, next) => {
-    const mentor = await Mentor.find();
-    //testing
-    // let a = [mentor];
-    // console.log(a.length);
-
-    res.status(200).json({
-        success: true,
-        mentor,
-    });
-});
+exports.getAllMentors = async (req, res) => {
+    try {
+        const mentor = await Mentor.find();
+        res.status(200).json({
+            success: true,
+            mentor,
+        });
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: error,
+        });
+    }
+};
 
 //get one mentor
-exports.getOneMentor = bigPromise(async (req, res, next) => {
-    const mentor = await Mentor.findById(req.params.id);
+exports.getOneMentor = async (req, res) => {
+    try {
+        const mentor = await Mentor.findById(req.params.id);
 
-    if (!mentor) {
-        return next(new CustomError("No mentor found with this id", 401));
+        if (!mentor) {
+            return res.status(400).json({
+                success: false,
+                message: "No mentor found!",
+            });
+        }
+        res.status(200).json({
+            success: true,
+            mentor,
+        });
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: error,
+        });
     }
-    res.status(200).json({
-        success: true,
-        mentor,
-    });
-});
-
+};
 
 //dashboard for mentor
-exports.getLoggedMentorDetails = bigPromise(async (req, res, next) => {
-    //req.user will be added by middleware
-    // find user by id
-    const mentor = await Mentor.findById(req.user.id);
+exports.getLoggedMentorDetails = async (req, res) => {
+    try {
+        //req.user will be added by middleware
+        // find user by id
+        const mentor = await Mentor.findById(req.mentor.id);
 
-    //send response and user data
-    res.status(200).json({
-        success: true,
-        mentor,
-    });
-});
+        //send response and user data
+        res.status(200).json({
+            success: true,
+            mentor,
+        });
+    } catch (error) {
+        res.status(401).json({
+            success: false,
+            message: error,
+        });
+    }
+};
