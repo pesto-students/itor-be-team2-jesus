@@ -60,8 +60,8 @@ mentorSchema.pre("save", async function (next) {
 });
 
 // validate the password with passed on user password
-mentorSchema.methods.isValidatedPassword = async function (userSendPassword) {
-    return await bcrypt.compare(userSendPassword, this.password);
+mentorSchema.methods.isValidatedPassword = async function (mentorSendPassword) {
+    return await bcrypt.compare(mentorSendPassword, this.password);
 };
 
 //create and return jwt token

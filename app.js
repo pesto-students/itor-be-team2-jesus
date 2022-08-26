@@ -31,6 +31,8 @@ app.use(morgan("tiny"));
 const home = require("./routes/home");
 const user = require("./routes/user");
 const mentor = require("./routes/mentor");
+const auth = require("./routes/auth");
+
 
 
 
@@ -38,6 +40,8 @@ const mentor = require("./routes/mentor");
 app.use("/api/v1", home);
 app.use("/api/v1", user);
 app.use("/api/v1", mentor);
+app.use("/api/v1", auth);
+
 
 
 

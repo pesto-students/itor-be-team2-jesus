@@ -1,14 +1,14 @@
 const User = require("../models/user");
-const Mentor = require("../models/mentor");
-
-const AllPromise = require("../middlewares/allPromise");
-const CustomError = require("../utils/customError");
+const bigPromise = require("../middlewares/bigPromise");
 const cookieToken = require("../utils/cookieToken");
 const cloudinary = require("cloudinary");
+//custom class for error message
+const CustomError = require("../utils/customError");
+// const userValidationSchema = require("../utils/userValidationSchema");
 
 
 // for sign up
-exports.signup = AllPromise(async (req, res, next) => {
+exports.signup = bigPromise(async (req, res, next) => {
     if (!req.files) {
         return next(new CustomError("Photo is required for signup", 400));
     }
@@ -19,11 +19,14 @@ exports.signup = AllPromise(async (req, res, next) => {
         return next(new CustomError("Name, Email and Password are required", 400));
     }
 
+
+    // const userJoi = await userValidationSchema.validate(req.body);
+    // console.log(userJoi)
     // const existingUser = await User.find({ email });
     // if (existingUser) {
     //     return res.status(401).send("User is already exist");
     // }
-
+    //  let file = userJoi.photo();
     let file = req.files.photo;
 
     const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
@@ -42,7 +45,7 @@ exports.signup = AllPromise(async (req, res, next) => {
         photo: {
             id: result.public_id,
             secure_url: result.secure_url,
-        },
+        }
     });
 
     cookieToken(user, res);
@@ -50,55 +53,8 @@ exports.signup = AllPromise(async (req, res, next) => {
 
 
 
-//for login 
-exports.login = AllPromise(async (req, res, next) => {
-    const { email, password } = req.body;
-
-    // check for presence of email and password
-    if (!email || !password) {
-        return next(new CustomError("Please provide your email and password", 400));
-    }
-
-    // get user from DB
-    const user = await User.findOne({ email }).select("+password") || await Mentor.findOne({ email }).select("+password");
-
-    // if user not found in DB
-    if (!user) {
-        return next(
-            new CustomError("Email or password does not match or exist", 400)
-        );
-    }
-
-    // match the password
-    const isPasswordCorrect = await user.isValidatedPassword(password);
-
-    //if password do not match
-    if (!isPasswordCorrect) {
-        return next(
-            new CustomError("Email or password does not match or exist", 400)
-        );
-    }
-
-    // if all goes good and we send the token
-    cookieToken(user, res);
-});
-
-//use logout
-exports.logout = AllPromise(async (req, res, next) => {
-    //clear the cookie
-    res.cookie("token", null, {
-        expires: new Date(Date.now()),
-        httpOnly: true,
-    });
-    //send JSON response for success
-    res.status(200).json({
-        succes: true,
-        message: "Logout success",
-    });
-});
-//user details
-
-exports.getLoggedInUserDetails = AllPromise(async (req, res, next) => {
+//user dashboard
+exports.getLoggedInUserDetails = bigPromise(async (req, res, next) => {
     //req.user will be added by middleware
     // find user by id
     const user = await User.findById(req.user.id);

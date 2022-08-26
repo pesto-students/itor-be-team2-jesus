@@ -3,17 +3,18 @@ const router = express.Router();
 
 const {
     signup,
-    getAllMentor,
+    getAllMentors,
     getLoggedMentorDetails,
     getOneMentor
 } = require("../controllers/mentorController");
 
 //is Logged in middleware
-const { isLoggedIn } = require("../middlewares/user");
+const { isLoggedInMentor } = require("../middlewares/mentor");
 
-router.route("/become-a-mentor").post(signup);
-router.route("/find-a-mentor").get(getAllMentor);
+router.route("/mentor/create").post(signup);
+router.route("/mentor/search").get(getAllMentors);
+router.route("/mentor/dashboard").get(isLoggedInMentor, getLoggedMentorDetails);
 router.route("/mentor/:id").get(getOneMentor);
-router.route("/mentordashboard").get(isLoggedIn, getLoggedMentorDetails);
+
 
 module.exports = router;

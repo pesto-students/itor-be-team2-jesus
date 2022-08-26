@@ -1,11 +1,12 @@
 const Mentor = require("../models/mentor");
-const AllPromise = require("../middlewares/allPromise");
-const CustomError = require("../utils/customError");
+const bigPromise = require("../middlewares/bigPromise");
 const cookieToken = require("../utils/cookieToken");
 const cloudinary = require("cloudinary");
+//custom class for error message
+const CustomError = require("../utils/customError");
 
 // for mentor sign up
-exports.signup = AllPromise(async (req, res, next) => {
+exports.signup = bigPromise(async (req, res, next) => {
     if (!req.files) {
         return next(new CustomError("Photo is required for signup", 400));
     }
@@ -47,7 +48,7 @@ exports.signup = AllPromise(async (req, res, next) => {
 
 //find a mentor
 
-exports.getAllMentor = AllPromise(async (req, res, next) => {
+exports.getAllMentors = bigPromise(async (req, res, next) => {
     const mentor = await Mentor.find();
     //testing
     // let a = [mentor];
@@ -60,7 +61,7 @@ exports.getAllMentor = AllPromise(async (req, res, next) => {
 });
 
 //get one mentor
-exports.getOneMentor = AllPromise(async (req, res, next) => {
+exports.getOneMentor = bigPromise(async (req, res, next) => {
     const mentor = await Mentor.findById(req.params.id);
 
     if (!mentor) {
@@ -74,14 +75,14 @@ exports.getOneMentor = AllPromise(async (req, res, next) => {
 
 
 //dashboard for mentor
-exports.getLoggedMentorDetails = AllPromise(async (req, res, next) => {
+exports.getLoggedMentorDetails = bigPromise(async (req, res, next) => {
     //req.user will be added by middleware
     // find user by id
-    const user = await Mentor.findById(req.user.id);
+    const mentor = await Mentor.findById(req.user.id);
 
     //send response and user data
     res.status(200).json({
         success: true,
-        user,
+        mentor,
     });
 });
