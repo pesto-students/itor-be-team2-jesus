@@ -1,13 +1,18 @@
 //this all is for testing purpose
-const bigPromise = require("../middlewares/bigPromise");
 
-exports.home = bigPromise(async (req, res) => {
+exports.home = async (req, res) => {
     // const db = await something()
-    res.status(200).json({
-        success: true,
-        greeting: "Hello from API",
-    });
-});
+    try {
+        // const db = await something()
+
+        res.status(200).json({
+            success: true,
+            greeting: "this is another home route",
+        });
+    } catch (error) {
+        console.log(error);
+    }
+};
 
 exports.homeDummy = async (req, res) => {
     try {
