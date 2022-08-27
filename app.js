@@ -2,6 +2,7 @@ const express = require("express");
 require("dotenv").config();
 const app = express();
 const morgan = require("morgan");
+const cors = require("cors");
 
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
@@ -10,6 +11,7 @@ const fileUpload = require("express-fileupload");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(cors())
 
 
 
