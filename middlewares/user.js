@@ -14,14 +14,16 @@ exports.isLoggedInUser = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        // console.log(decoded.id);
 
         req.user = await User.findById(decoded.id);
+        // console.log(req.user.id)
 
         next();
     } catch (error) {
         res.status(401).json({
             success: false,
-            message: error,
+            message: "Authentication failed!",
         });
     }
 };
