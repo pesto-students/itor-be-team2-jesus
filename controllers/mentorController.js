@@ -103,7 +103,7 @@ exports.getOneMentor = async (req, res) => {
 //dashboard for mentor
 exports.getLoggedMentorDetails = async (req, res) => {
     try {
-        //req.user will be added by middleware
+        //req.mentor will be added by middleware
         // find user by id
         const mentor = await Mentor.findById(req.mentor.id);
 

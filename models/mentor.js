@@ -6,18 +6,18 @@ const jwt = require("jsonwebtoken");
 const mentorSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Enter your name"],
+        required: [true, "Please enter your name!"],
     },
     email: {
         type: String,
-        required: [true, "Enter your email"],
-        validate: [validator.isEmail, "Please enter email in correct format"],
+        required: [true, "Please enter your email!"],
+        validate: [validator.isEmail, "Please enter your email in correct format!"],
         unique: true,
     },
     password: {
         type: String,
-        required: [true, "Enter your password"],
-        minlength: [6, "Password must be at least 8 characters"],
+        required: [true, "Please enter your password!"],
+        minlength: [6, "Password must be at least 8 characters long!"],
         select: false,
     },
     role: {
@@ -38,7 +38,7 @@ const mentorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    yearOfEx: {
+    YOE: {
         type: Number,
         required: true
     },
