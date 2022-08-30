@@ -12,7 +12,7 @@ exports.signup = async (req, res) => {
             });
         }
 
-        const { name, email, password, companyName, yearOfEx, expertise } =
+        const { name, email, password, companyName, YOE, expertise } =
             req.body;
 
         if (!email || !name || !password) {
@@ -43,7 +43,7 @@ exports.signup = async (req, res) => {
             email,
             password,
             companyName,
-            yearOfEx,
+            YOE,
             expertise,
             photo: {
                 id: result.public_id,
