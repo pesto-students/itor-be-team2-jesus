@@ -3,41 +3,45 @@ const validator = require("validator");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "Please enter your name!"],
-    },
-    email: {
-        type: String,
-        required: [true, "Please enter your email!"],
-        validate: [validator.isEmail, "Please enter your email in correct format!"],
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: [true, "Please enter your password!"],
-        minlength: [6, "Password must be at least 8 characters long!"],
-        select: false,
-    },
-    role: {
-        type: String,
-        default: "user",
-    },
-    photo: {
-        id: {
+const userSchema = new mongoose.Schema(
+    {
+        name: {
             type: String,
-            required: true,
+            required: [true, "Please enter your name!"],
         },
-        secure_url: {
+        email: {
             type: String,
-            required: true,
+            required: [true, "Please enter your email!"],
+            validate: [
+                validator.isEmail,
+                "Please enter your email in correct format!",
+            ],
+            unique: true,
+        },
+        password: {
+            type: String,
+            required: [true, "Please enter your password!"],
+            minlength: [6, "Password must be at least 8 characters long!"],
+            select: false,
+        },
+        role: {
+            type: String,
+            default: "user",
+        },
+        photo: {
+            id: {
+                type: String,
+            },
+            secure_url: {
+                type: String,
+            },
+        },
+        schoolName: {
+            type: String,
         },
     },
-    schoolName: {
-        type: String,
-    }
-}, { timestamps: true });
+    { timestamps: true }
+);
 
 //encrypt password before save - HOOKS
 userSchema.pre("save", async function (next) {
@@ -58,6 +62,5 @@ userSchema.methods.getJwtToken = function () {
         expiresIn: process.env.JWT_EXPIRY,
     });
 };
-
 
 module.exports = mongoose.model("User", userSchema);

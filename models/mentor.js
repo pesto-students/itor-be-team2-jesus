@@ -27,24 +27,19 @@ const mentorSchema = new mongoose.Schema({
     photo: {
         id: {
             type: String,
-            required: true,
         },
         secure_url: {
             type: String,
-            required: true,
         },
     },
     companyName: {
         type: String,
-        required: true
     },
     YOE: {
         type: Number,
-        required: true
     },
     expertise: {
         type: String,
-        required: true
     },
     about: {
         type: String
