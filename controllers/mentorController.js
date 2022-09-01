@@ -5,12 +5,6 @@ const cloudinary = require("cloudinary");
 // for mentor sign up
 exports.signup = async (req, res) => {
     try {
-        if (!req.files) {
-            return res.status(400).json({
-                success: false,
-                message: "Photo is required for signup!",
-            });
-        }
 
         const { name, email, password, companyName, YOE, expertise } =
             req.body;
@@ -30,14 +24,6 @@ exports.signup = async (req, res) => {
             });
         }
 
-        let file = req.files.photo;
-
-        const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
-            folder: "mentors",
-            width: 150,
-            crop: "scale",
-        });
-
         const mentor = await Mentor.create({
             name,
             email,
@@ -45,10 +31,6 @@ exports.signup = async (req, res) => {
             companyName,
             YOE,
             expertise,
-            photo: {
-                id: result.public_id,
-                secure_url: result.secure_url,
-            },
         });
 
         cookieToken(mentor, res);
