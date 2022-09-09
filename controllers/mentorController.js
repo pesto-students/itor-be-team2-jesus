@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary");
 exports.signup = async (req, res) => {
     try {
 
-        const { name, email, password, companyName, YOE, expertise } =
+        const { name, email, password, companyName, YOE, expertise, calendlyLink } =
             req.body;
 
         if (!email || !name || !password) {
@@ -41,6 +41,7 @@ exports.signup = async (req, res) => {
             companyName,
             YOE,
             expertise,
+            calendlyLink,
             photo: {
                 id: result.public_id,
                 secure_url: result.secure_url,
