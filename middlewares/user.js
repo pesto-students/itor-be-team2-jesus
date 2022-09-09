@@ -14,10 +14,10 @@ exports.isLoggedInUser = async (req, res, next) => {
         }
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        // console.log(decoded.id);
+        // console.log(decoded._id);
 
-        req.user = await User.findById(decoded.id);
-        // console.log(req.user.id)
+        req.user = await User.findById(decoded._id);
+        // console.log(req.user._id)
 
         next();
     } catch (error) {

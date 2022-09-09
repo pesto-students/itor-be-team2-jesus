@@ -34,6 +34,8 @@ const home = require("./routes/home");
 const user = require("./routes/user");
 const mentor = require("./routes/mentor");
 const auth = require("./routes/auth");
+const booking = require("./routes/booking");
+const post = require("./routes/post");
 
 
 
@@ -43,6 +45,8 @@ app.use("/api/v1", home);
 app.use("/api/v1", user);
 app.use("/api/v1", mentor);
 app.use("/api/v1", auth);
+app.use("/api/v1", booking);
+app.use("/api/v1", post);
 
 
 
