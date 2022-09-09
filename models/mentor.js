@@ -43,7 +43,11 @@ const mentorSchema = new mongoose.Schema({
     },
     about: {
         type: String
-    }
+    },
+    calendlyLink: {
+        type: String,
+    },
+
 }, { timestamps: true });
 
 //encrypt password before save - HOOKS
