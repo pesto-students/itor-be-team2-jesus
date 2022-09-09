@@ -1,9 +1,7 @@
 //this all is for testing purpose
 
 exports.home = async (req, res) => {
-    // const db = await something()
     try {
-        // const db = await something()
 
         res.status(200).json({
             success: true,
@@ -16,8 +14,6 @@ exports.home = async (req, res) => {
 
 exports.homeDummy = async (req, res) => {
     try {
-        // const db = await something()
-
         res.status(200).json({
             success: true,
             greeting: "this is another dummy route",
