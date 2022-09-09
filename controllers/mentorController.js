@@ -24,6 +24,16 @@ exports.signup = async (req, res) => {
             });
         }
 
+
+        let file = req.files.photo;
+
+        const result = await cloudinary.v2.uploader.upload(file.tempFilePath, {
+            folder: "mentors",
+            width: 400,
+            crop: "scale",
+        });
+
+
         const mentor = await Mentor.create({
             name,
             email,
@@ -31,6 +41,10 @@ exports.signup = async (req, res) => {
             companyName,
             YOE,
             expertise,
+            photo: {
+                id: result.public_id,
+                secure_url: result.secure_url,
+            },
         });
 
         cookieToken(mentor, res);
@@ -87,7 +101,7 @@ exports.getLoggedMentorDetails = async (req, res) => {
     try {
         //req.mentor will be added by middleware
         // find user by id
-        const mentor = await Mentor.findById(req.mentor.id);
+        const mentor = await Mentor.findById(req.mentor._id);
 
         //send response and user data
         res.status(200).json({

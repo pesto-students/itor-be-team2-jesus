@@ -42,7 +42,7 @@ exports.getLoggedInUserDetails = async (req, res) => {
     try {
         //req.user will be added by middleware
         // find user by id
-        const user = await User.findById(req.user.id);
+        const user = await User.findById(req.user._id);
 
         //send response and user data
         res.status(200).json({

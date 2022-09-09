@@ -43,7 +43,7 @@ exports.login = async (req, res) => {
     } catch (error) {
         res.status(401).json({
             success: false,
-            message: error,
+            message: "Login failed!",
         });
     }
 };
@@ -62,7 +62,7 @@ exports.logout = async (req, res) => {
     } catch (error) {
         res.status(401).json({
             success: false,
-            message: error,
+            message: "Logout failed!",
         });
     }
 };
