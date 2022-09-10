@@ -39,7 +39,7 @@ exports.getAllPosts = async (req, res) => {
 };
 
 
-exports.createComment = async (req, res) => {
+exports.createComment =  (req, res) => {
     const comment = {
         text: req.body.text,
         postedBy: req.user._id
