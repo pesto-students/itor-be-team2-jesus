@@ -39,12 +39,12 @@ exports.getAllPosts = async (req, res) => {
 };
 
 
-exports.createComment =  (req, res) => {
+exports.createComment = (req, res) => {
     const comment = {
         text: req.body.text,
         postedBy: req.user._id
     }
-    Post.findByIdAndUpdate(req.body.postId, {
+    Post.findByIdAndUpdate(req.params.id, {
         $push: { comments: comment }
     }, {
         new: true
