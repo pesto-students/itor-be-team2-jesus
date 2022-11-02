@@ -1,21 +1,57 @@
-# Pesto Assignments
+# Itor
 
-Welcome to Pesto assignments.
+- Itor is an application which connects the knowledge providers and knowledge receivers and help them schedule the calls with each other to get mentorship.
+- It also provides a platform where the users can ask and answer questions.
 
+# Table of Contents
 
-## How to solve assignments
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#technology-stack)
+4. [Authors](#authors)
+5. [License](#license)
 
-Weekly Assignments will be shared by your mentor or instructor.
+# Demo
 
-Make sure master or main branch is protected and you are not able to push any code directly to master.
+[Live Demo](https://itor.netlify.app/)
 
-- Clone this repo to your local.
-- Checkout to new branch for submission. Suggestion you can name new branch week wise - branch for week 1 assignment can be week1
-```bash
-git checkout -b week1
-```
-- Create Assignment week folder in root directory(if it doesn't exist) for eg. for solving week 1 assignment create folder with name "week1".
-- You can create subfolders in main week(week1) folder if required.
-- Add proper readme [(How to Write proper readme](https://meakaakka.medium.com/a-beginners-guide-to-writing-a-kickass-readme-7ac01da88ab3) )in week's folder or subfolder explaining about assignment, how to run assignment and any other instructions. 
-- Raise a PR against master and add your mentor as reviewer
-- Resolve PR comments if any and once your mentor approves your PR, Merge it.
+Installs all the necessary dependencies
+
+Please Note:
+
+1. We recommend using this app in Google Chrome
+2. Use the app on Laptop/desktop only as of now.
+
+<br/>
+Test Credentials:
+
+- For Mentee
+  - Email: pesto@project.com
+  - Password: 9999999999
+
+<br/>
+
+# Installation
+
+- Fork or directly clone this repository to your local machine
+- Use the `npm install` command to install dependencies
+- Once the dependencies are finished installing, use the `npm start` command inside the root directory to open the app in your local browser of choice
+
+<br/>
+
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before. This resulted in a fast, performant, and easily-extensible web app that should be fairly future-proof for the coming next several years. We used:
+
+- [Node JS](https://nodejs.org/)
+- [Cloudinary](https://cloudinary.com/)
+- [MongoDB](https://www.mongodb.com/)
+
+# Authors
+
+- [Mahima Khandelwal](https://github.com/Maheima)
+- [Mohammad Naeem](https://github.com/mitcareem)
+
+<br/>
+
+# License
+
+[MIT](https://opensource.org/licenses/MIT)
