@@ -1,22 +1,57 @@
+# Itor
 
-## Welcome to Itor
+- Itor is an application which connects the knowledge providers and knowledge receivers and help them schedule the calls with each other to get mentorship.
+- It also provides a platform where the users can ask and answer questions.
 
-In the project directory, you can run:
+# Table of Contents
 
-### `npm install`
+1. [Demo](#demo)
+2. [Installation](#installation)
+3. [Technology Stack](#technology-stack)
+4. [Authors](#authors)
+5. [License](#license)
+
+# Demo
+
+[Live Demo](https://itor.netlify.app/)
 
 Installs all the necessary dependencies
 
-### `npm start`
+Please Note:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. We recommend using this app in Google Chrome
+2. Use the app on Laptop/desktop only as of now.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br/>
+Test Credentials:
 
-### `npm test`
+- For Mentee
+  - Email: pesto@project.com
+  - Password: 9999999999
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information
+<br/>
 
+# Installation
+
+- Fork or directly clone this repository to your local machine
+- Use the `npm install` command to install dependencies
+- Once the dependencies are finished installing, use the `npm start` command inside the root directory to open the app in your local browser of choice
+
+<br/>
+
+We tried to use a completely modern tech stack while testing out some new technologies that we had never used before. This resulted in a fast, performant, and easily-extensible web app that should be fairly future-proof for the coming next several years. We used:
+
+- [Node JS](https://nodejs.org/)
+- [Cloudinary](https://cloudinary.com/)
+- [MongoDB](https://www.mongodb.com/)
+
+# Authors
+
+- [Mahima Khandelwal](https://github.com/Maheima)
+- [Mohammad Naeem](https://github.com/mitcareem)
+
+<br/>
+
+# License
+
+[MIT](https://opensource.org/licenses/MIT)
